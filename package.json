@@ -65,7 +65,8 @@
       "patch": "./cordis.patch.yml"
     },
     "skills": [
-      "skills/rag-eval-suite"
+      "skills/rag-eval-suite",
+      "skills/dsh-plugin-release"
     ],
     "mcp": "mcp.json"
   },

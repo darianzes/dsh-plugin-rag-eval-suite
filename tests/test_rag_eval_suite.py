@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -817,6 +818,52 @@ console.log('DSH_PARITY_OK', registeredTools.length, 'all10Executed=true', 'real
         )
         self.assertEqual(cli_manual.returncode, 0, cli_manual.stderr)
         self.assertTrue(json.loads(cli_manual.stdout)["case_evaluation"]["passed"])
+
+
+class TestReleaseTooling(unittest.TestCase):
+    """发版工具链：一键脚本 + 契约探测器 + 多 Skill 分发。"""
+
+    def test_release_script_syntax_and_helpers(self) -> None:
+        script = PLUGIN_ROOT / "scripts" / "release.sh"
+        self.assertTrue(script.exists(), "缺少 scripts/release.sh")
+        proc = subprocess.run(["bash", "-n", str(script)], capture_output=True, text=True, check=False)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+
+        text = script.read_text(encoding="utf-8")
+        for token in ("--dry-run", "--skip-publish", "--skip-git", "--otp", "npm publish", "gh release create"):
+            self.assertIn(token, text, f"release.sh 缺少能力: {token}")
+
+    def test_skill_catalog_matches_manifests(self) -> None:
+        skills_root = PLUGIN_ROOT / "skills"
+        skill_dirs = sorted(p for p in skills_root.iterdir() if (p / "SKILL.md").exists())
+        self.assertGreaterEqual(len(skill_dirs), 2, "应至少分发 rag-eval-suite 与 dsh-plugin-release 两个 Skill")
+
+        declared = json.loads((PLUGIN_ROOT / "package.json").read_text(encoding="utf-8"))["dsh"]["skills"]
+        self.assertEqual(sorted(declared), sorted(f"skills/{p.name}" for p in skill_dirs))
+
+        codex = json.loads((PLUGIN_ROOT / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        self.assertEqual(sorted(codex["skills"]), sorted(declared))
+
+        for skill in skill_dirs:
+            front = (skill / "SKILL.md").read_text(encoding="utf-8")[:400]
+            self.assertIn("name:", front, f"{skill.name}: SKILL.md 缺少 front matter name")
+            self.assertIn(f"name: {skill.name}", front, f"{skill.name}: front matter name 与目录名不一致")
+
+    def test_contract_probe_passes(self) -> None:
+        probe = PLUGIN_ROOT / "skills" / "dsh-plugin-release" / "scripts" / "probe-define-tools.mjs"
+        self.assertTrue(probe.exists(), "缺少契约探测器 probe-define-tools.mjs")
+        if not shutil.which("node"):
+            self.skipTest("node 不可用，跳过契约探测")
+        proc = subprocess.run(
+            ["node", str(probe), str(PLUGIN_ROOT / "dsh" / "index.mjs"), "--json"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        report = json.loads(proc.stdout)
+        self.assertTrue(report["pass"], report.get("problems"))
+        self.assertEqual(report["specCount"], len(MCP_TOOLS))
 
 
 if __name__ == "__main__":

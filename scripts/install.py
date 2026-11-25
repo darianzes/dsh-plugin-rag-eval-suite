@@ -38,6 +38,22 @@ def _symlink_or_copy(src: Path, dst: Path, dry_run: bool, copy_mode: bool = Fals
     return f"[{'RELINKED' if existed else 'LINKED'}] {dst} -> {src}"
 
 
+def _skill_dirs() -> List[Path]:
+    """所有随插件分发的 Skill（skills/<name>/SKILL.md）。"""
+    root = PLUGIN_ROOT / "skills"
+    if not root.exists():
+        return []
+    return sorted((p for p in root.iterdir() if (p / "SKILL.md").exists()), key=lambda p: p.name)
+
+
+def _install_skills(dest_root: Path, dry_run: bool, copy_mode: bool) -> List[str]:
+    """把每个 Skill 目录安装到 <dest_root>/<skill-name>。"""
+    logs: List[str] = []
+    for skill in _skill_dirs():
+        logs.append(_symlink_or_copy(skill, dest_root / skill.name, dry_run=dry_run, copy_mode=copy_mode))
+    return logs
+
+
 def _verify_manifests() -> List[str]:
     checks = [
         ("Antigravity manifest", PLUGIN_ROOT / "plugin.json"),
@@ -52,7 +68,7 @@ def _verify_manifests() -> List[str]:
         ("DSH Locale (en)", PLUGIN_ROOT / "locale" / "en.json"),
         ("DSH Locale (zh)", PLUGIN_ROOT / "locale" / "zh.json"),
         ("Plugin Icon SVG", PLUGIN_ROOT / "assets" / "logo.svg"),
-        ("Universal SKILL.md", PLUGIN_ROOT / "skills" / PLUGIN_NAME / "SKILL.md"),
+        *[(f"Skill: {s.name}", s / "SKILL.md") for s in _skill_dirs()],
         ("Plugin Rules", PLUGIN_ROOT / "rules" / "AGENTS.md"),
         ("MCP Runner Script", PLUGIN_ROOT / "scripts" / "run_mcp.sh"),
     ]
@@ -117,8 +133,7 @@ def install_antigravity(dry_run: bool, copy_mode: bool) -> List[str]:
 
 def install_claude(dry_run: bool, copy_mode: bool) -> List[str]:
     home = Path.home()
-    skill_target = home / ".claude" / "skills" / PLUGIN_NAME
-    logs = [_symlink_or_copy(PLUGIN_ROOT / "skills" / PLUGIN_NAME, skill_target, dry_run=dry_run, copy_mode=copy_mode)]
+    logs = _install_skills(home / ".claude" / "skills", dry_run=dry_run, copy_mode=copy_mode)
     logs.append(
         f"提示 (Claude Code): 也可直接以完整插件模式加载：`claude --plugin-dir {PLUGIN_ROOT}` 或 `/plugin install {PLUGIN_ROOT}`。"
     )
@@ -128,11 +143,9 @@ def install_claude(dry_run: bool, copy_mode: bool) -> List[str]:
 def install_codex(dry_run: bool, copy_mode: bool) -> List[str]:
     home = Path.home()
     codex_home = Path(os.environ.get("CODEX_HOME", str(home / ".codex")))
-    shared_skill = home / ".agents" / "skills" / PLUGIN_NAME
-    codex_skill = codex_home / "skills" / PLUGIN_NAME
-    logs = [
-        _symlink_or_copy(PLUGIN_ROOT / "skills" / PLUGIN_NAME, shared_skill, dry_run=dry_run, copy_mode=copy_mode),
-        _symlink_or_copy(PLUGIN_ROOT / "skills" / PLUGIN_NAME, codex_skill, dry_run=dry_run, copy_mode=copy_mode),
+    logs = _install_skills(home / ".agents" / "skills", dry_run=dry_run, copy_mode=copy_mode)
+    logs += _install_skills(codex_home / "skills", dry_run=dry_run, copy_mode=copy_mode)
+    logs += [
         f"提示 (Codex MCP): 在 ~/.codex/config.toml 中添加 MCP server：\n"
         f"  [mcp_servers.rag-eval-suite]\n"
         f'  command = "{PLUGIN_ROOT / "scripts" / "run_mcp.sh"}"',
@@ -142,9 +155,8 @@ def install_codex(dry_run: bool, copy_mode: bool) -> List[str]:
 
 def install_dsh(dry_run: bool, copy_mode: bool) -> List[str]:
     home = Path.home()
-    shared_skill = home / ".agents" / "skills" / PLUGIN_NAME
-    logs = [
-        _symlink_or_copy(PLUGIN_ROOT / "skills" / PLUGIN_NAME, shared_skill, dry_run=dry_run, copy_mode=copy_mode),
+    logs = _install_skills(home / ".agents" / "skills", dry_run=dry_run, copy_mode=copy_mode)
+    logs += [
         f"提示 (DeepSeek Harness / dsh): 已满足标准 DSH Bundle 规范，推荐按 Bundle 安装：\n"
         f"  1) 标准 Bundle 安装（推荐）：在 DSH Plugin Manager 调用 `plugin_manager` (`install_bundle`) 指定目录 `{PLUGIN_ROOT}`\n"
         f"  2) 本地开发调试挂载：`npx @deepseek-ai/dsh --patch {PLUGIN_ROOT / 'cordis.patch.yml'}`\n"

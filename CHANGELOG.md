@@ -5,6 +5,24 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-11-25
+
+### Added
+- `scripts/release.sh` —— 一键发版：三道闸门（单元测试 / DSH 工具契约 / tarball 解包冒烟）→
+  六处清单版本同步 → `npm publish` → 等待 registry 生效 → commit/tag/push → `gh release create`。
+  支持 `--dry-run`、`--skip-publish`、`--skip-git`、`--otp`、`--notes`。
+- `skills/dsh-plugin-release/` —— 把「DSH 插件从本地能跑到 npm 可装」沉淀为可复用 Skill：
+  bundle 契约、`defineTool` 属性映射与 `additionalProperties` 硬规则、打包卫生、
+  版本矩阵、发布流水线与 20 条真实踩坑诊断。
+- `skills/dsh-plugin-release/scripts/probe-define-tools.mjs` —— G2 契约探测器：
+  校验 `inject` 形态、工具规格层级 `additionalProperties`、`output.schema` + `render`，
+  并可用 DSH 真实 `defineTool` 编译（`--real`）。
+- `skills/dsh-plugin-release/references/` —— 发版清单与踩坑手册。
+
+### Changed
+- `scripts/install.py` 现在安装 `skills/` 下的**全部** Skill（此前只安装单一 Skill），
+  并同步校验每个 Skill 的 `SKILL.md`。
+
 ## [0.2.2] - 2026-11-25
 
 ### Added
@@ -63,6 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MCP stdio server exposing the same tool surface.
 - Cross-harness installers for Antigravity, Claude Code, OpenAI Codex, and DeepSeek Harness.
 
+[0.3.0]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.3.0
 [0.2.2]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.2.2
 [0.2.1]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.2.1
 [0.2.0]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.2.0

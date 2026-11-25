@@ -6,7 +6,8 @@
     "name": "RAG Eval Suite Contributors"
   },
   "skills": [
-    "skills/rag-eval-suite"
+    "skills/rag-eval-suite",
+    "skills/dsh-plugin-release"
   ],
   "mcp": "mcp.json"
 }
