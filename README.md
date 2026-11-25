@@ -1,5 +1,9 @@
 # RAG Eval Suite (`rag-eval-suite`)
 
+[![CI](https://github.com/darianzes/dsh-plugin-rag-eval-suite/actions/workflows/ci.yml/badge.svg)](https://github.com/darianzes/dsh-plugin-rag-eval-suite/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/dsh-plugin-rag-eval-suite.svg)](https://www.npmjs.com/package/dsh-plugin-rag-eval-suite)
+[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 > **理解先行 · 指标严谨 · 低资源占用 · 跨平台适配**  
 > 专为 RAG 系统打造的测试数据生成、模块化测试方法执行（单独/批量/手动）、核心指标回测（命中率、准确率、幻觉率、拒答率、延迟等）及 P0-P3 根因分级诊断插件。
 
