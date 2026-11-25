@@ -1,0 +1,4 @@
+# DeepSeek Harness (dsh) Cordis composition patch (Loader insert dialect)
+- insert:
+    - id: rag-eval-suite
+      name: dsh-plugin-rag-eval-suite

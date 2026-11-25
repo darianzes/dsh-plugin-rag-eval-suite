@@ -1,0 +1,15 @@
+{
+  "name": "rag-eval-suite",
+  "displayName": "RAG Eval Suite",
+  "version": "0.2.1",
+  "description": "Understand-first RAG evaluation plugin: generates categorized test datasets, runs single/batch/manual backtests for hit rate, accuracy, and hallucination rate, grades root causes (P0-P3) with remediation plans, and exports interactive HTML + downloadable Markdown reports.",
+  "logo": "assets/logo.svg",
+  "author": {
+    "name": "RAG Eval Suite Contributors"
+  },
+  "suggestedPrompts": [
+    "先理解当前项目的 RAG 架构与知识库，生成系统理解档案并评估是否需要精简核心测试范围",
+    "基于已确认的 RAG 档案生成分类测试数据集（含幻觉与拒答边界），并展示各分类测试数据",
+    "运行 RAG 核心指标回测（命中率、准确率、幻觉率），进行 P0-P3 问题原因分级并生成可浏览页面与可下载 MD 报告"
+  ]
+}

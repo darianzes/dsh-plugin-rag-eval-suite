@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "name": "RAG Eval Suite",
+    "description": "Understand-first RAG evaluation, categorized test dataset generation, single/batch/manual backtesting (hit rate, accuracy, hallucination rate), P0-P3 root-cause grading, and interactive HTML + downloadable Markdown reports."
+  },
+  "tools": {
+    "rag_eval_inspect": "Inspect RAG architecture, corpus & observability",
+    "rag_eval_confirm": "Confirm understanding profile & unlock gate",
+    "rag_eval_scope": "Profile complexity & prune core test scope",
+    "rag_eval_generate_dataset": "Generate categorized RAG test dataset",
+    "rag_eval_view_dataset": "Browse & filter categorized test data",
+    "rag_eval_list_methods": "List modular evaluation methods",
+    "rag_eval_run": "Run single/batch/offline RAG backtest",
+    "rag_eval_manual_eval": "Run manual single-turn Q&A evaluation",
+    "rag_eval_generate_report": "Generate HTML & downloadable Markdown report",
+    "rag_eval_status": "Inspect workspace status & memory RSS"
+  }
+}

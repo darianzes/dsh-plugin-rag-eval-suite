@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.rag_eval/
+.rag_eval_*/
+.DS_Store
+*.egg-info/
+dist/
+build/
+node_modules/
+*.tgz
+.pytest_cache/
+.npm/

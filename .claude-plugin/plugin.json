@@ -1,0 +1,16 @@
+{
+  "name": "rag-eval-suite",
+  "version": "0.2.1",
+  "description": "Understand-first RAG evaluation & root-cause analysis plugin for generating categorized test data, running single/batch/manual backtests (hit rate, accuracy, hallucination rate), P0-P3 diagnosis, and interactive HTML + downloadable Markdown reports.",
+  "author": {
+    "name": "RAG Eval Suite Contributors"
+  },
+  "keywords": [
+    "rag",
+    "evaluation",
+    "hallucination",
+    "retrieval",
+    "backtest",
+    "root-cause-analysis"
+  ]
+}

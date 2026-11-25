@@ -1,0 +1,86 @@
+{
+  "name": "dsh-plugin-rag-eval-suite",
+  "version": "0.2.1",
+  "description": "DeepSeek Harness (dsh) Cordis plugin & cross-harness RAG evaluation suite (test data generation, single/batch/manual backtesting, P0-P3 root-cause diagnosis, interactive HTML + downloadable Markdown reports).",
+  "type": "module",
+  "main": "dsh/index.mjs",
+  "icon": "./assets/logo.svg",
+  "license": "MIT",
+  "author": {
+    "name": "RAG Eval Suite Contributors"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "rag",
+    "evaluation",
+    "hallucination",
+    "retrieval",
+    "root-cause-analysis",
+    "mcp"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dsh/index.mjs",
+      "default": "./dsh/index.mjs"
+    },
+    "./icon": "./assets/logo.svg",
+    "./locale/*": "./locale/*.json"
+  },
+  "files": [
+    "dsh",
+    "rag_eval",
+    "skills",
+    "scripts",
+    "assets",
+    "locale",
+    "commands",
+    "rules",
+    "examples/sample_kb",
+    "cordis.patch.yml",
+    "plugin.json",
+    "mcp_config.json",
+    "AGENTS.md",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "mcp.json",
+    ".mcp.json",
+    ".claude-plugin",
+    ".codex-plugin"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "skills": [
+      "skills/rag-eval-suite"
+    ],
+    "mcp": "mcp.json"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=0.5.0",
+    "@deepseek-ai/dsh": ">=0.2.0",
+    "@deepseek-ai/dsh-tools": ">=0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "mcp": "python3 -m rag_eval.mcp_server",
+    "studio": "python3 -m rag_eval serve",
+    "test": "python3 -m unittest discover -s tests -v",
+    "prepack": "python3 -c \"import pathlib,shutil; [shutil.rmtree(p) for p in pathlib.Path('.').rglob('__pycache__')]\""
+  }
+}

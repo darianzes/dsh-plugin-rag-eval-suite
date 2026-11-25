@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "name": "RAG 评测与诊断套件 (RAG Eval Suite)",
+    "description": "理解先行的 RAG 评测插件：生成 10 分类语料测试集，支持单方法/批量/离线手动回测命中率、准确率与幻觉率，输出 P0-P3 根因分级方案及可浏览 HTML / 可下载 Markdown 报告。"
+  },
+  "tools": {
+    "rag_eval_inspect": "理解先行：扫描 RAG 架构、知识库与可观测性",
+    "rag_eval_confirm": "确认理解档案并解锁测试门禁",
+    "rag_eval_scope": "复杂度评估与核心范围精简",
+    "rag_eval_generate_dataset": "生成多分类 RAG 测试数据集",
+    "rag_eval_view_dataset": "独立分类查看与筛选测试数据",
+    "rag_eval_list_methods": "查看模块化测试方法清单",
+    "rag_eval_run": "执行单条/单方法/批量/离线回测",
+    "rag_eval_manual_eval": "免配置单条手动问答评测",
+    "rag_eval_generate_report": "生成交互 HTML 与可下载 Markdown 报告",
+    "rag_eval_status": "查看工作区状态与实时内存占用"
+  }
+}
