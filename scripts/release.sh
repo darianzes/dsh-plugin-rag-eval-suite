@@ -197,7 +197,10 @@ else
   npm pack --pack-destination "$PKG_DIR" >/dev/null
   TARBALL="$(ls "$PKG_DIR"/*.tgz | head -1)"
   BASENAME="$(basename "$TARBALL")"
-  ok "打包: ${BASENAME} ($(du -h "$TARBALL" | cut -f1))"
+  mkdir -p "$ROOT/dist"
+  cp "$TARBALL" "$ROOT/dist/$BASENAME"
+  TARBALL="$ROOT/dist/$BASENAME"
+  ok "打包: dist/${BASENAME} ($(du -h "$TARBALL" | cut -f1), shasum $(shasum -a 1 "$TARBALL" | cut -c1-12)…)"
 
   tar xzf "$TARBALL" -C "$PKG_DIR"
   PKG_ROOT="$PKG_DIR/package"
