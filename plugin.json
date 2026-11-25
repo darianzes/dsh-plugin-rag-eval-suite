@@ -1,7 +1,7 @@
 {
   "name": "rag-eval-suite",
   "displayName": "RAG Eval Suite",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Understand-first RAG evaluation plugin: generates categorized test datasets, runs single/batch/manual backtests for hit rate, accuracy, and hallucination rate, grades root causes (P0-P3) with remediation plans, and exports interactive HTML + downloadable Markdown reports.",
   "logo": "assets/logo.svg",
   "author": {

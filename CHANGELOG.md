@@ -5,6 +5,16 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2026-11-25
+
+### Added
+- Source repository metadata (`repository` / `homepage` / `bugs`) pointing at
+  https://github.com/darianzes/dsh-plugin-rag-eval-suite.
+
+### Fixed
+- CHANGELOG release comparison links now target the npm version pages instead of
+  placeholder GitHub release URLs.
+
 ## [0.2.1] - 2026-11-25
 
 ### Added
@@ -53,5 +63,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MCP stdio server exposing the same tool surface.
 - Cross-harness installers for Antigravity, Claude Code, OpenAI Codex, and DeepSeek Harness.
 
+[0.2.2]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.2.2
 [0.2.1]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.2.1
 [0.2.0]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.2.0

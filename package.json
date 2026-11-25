@@ -1,11 +1,19 @@
 {
   "name": "dsh-plugin-rag-eval-suite",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "DeepSeek Harness (dsh) Cordis plugin & cross-harness RAG evaluation suite (test data generation, single/batch/manual backtesting, P0-P3 root-cause diagnosis, interactive HTML + downloadable Markdown reports).",
   "type": "module",
   "main": "dsh/index.mjs",
   "icon": "./assets/logo.svg",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darianzes/dsh-plugin-rag-eval-suite.git"
+  },
+  "homepage": "https://github.com/darianzes/dsh-plugin-rag-eval-suite#readme",
+  "bugs": {
+    "url": "https://github.com/darianzes/dsh-plugin-rag-eval-suite/issues"
+  },
   "author": {
     "name": "RAG Eval Suite Contributors"
   },
