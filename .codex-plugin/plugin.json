@@ -1,6 +1,6 @@
 {
   "name": "rag-eval-suite",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Understand-first RAG evaluation & root-cause analysis plugin for OpenAI Codex, Claude Code, Antigravity, and DeepSeek Harness (dsh).",
   "author": {
     "name": "RAG Eval Suite Contributors"
