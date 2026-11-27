@@ -5,6 +5,17 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2026-11-27
+
+### Docs
+- README 新增「发版（一键发布）」小节：`release.sh` 七步闸门表、五种调用方式（全流程 / 语义化自增 /
+  `--dry-run` / `--skip-publish` / `--otp`）、前置条件、产物位置，以及把发版方法论复用到新插件的方式。
+- 目录结构补充 `skills/dsh-plugin-release/` 与 `scripts/release.sh`，避免使用者漏看发版工具链。
+
+### Verified
+- 在 DSH 桌面端以 npm 0.3.0 实体安装（非 `link:`）完成端到端验收：10 个 `rag_eval_*` 工具由
+  `defineTool` 正常注册，`inspect → confirm → scope → generate → run` 全链路跑通并产出 HTML/Markdown 报告。
+
 ## [0.3.0] - 2026-11-25
 
 ### Added
@@ -81,6 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MCP stdio server exposing the same tool surface.
 - Cross-harness installers for Antigravity, Claude Code, OpenAI Codex, and DeepSeek Harness.
 
+[0.3.1]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.3.1
 [0.3.0]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.3.0
 [0.2.2]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.2.2
 [0.2.1]: https://www.npmjs.com/package/dsh-plugin-rag-eval-suite/v/0.2.1
