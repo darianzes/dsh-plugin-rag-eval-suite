@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-rag-eval-suite",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "DeepSeek Harness (dsh) Cordis plugin & cross-harness RAG evaluation suite (test data generation, single/batch/manual backtesting, P0-P3 root-cause diagnosis, interactive HTML + downloadable Markdown reports).",
   "type": "module",
   "main": "dsh/index.mjs",
