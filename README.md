@@ -145,8 +145,45 @@ DeepseekRagTestPlugin/
 ├── rules/AGENTS.md             # 强制理解门禁与低资源常驻规则
 ├── commands/                   # Claude Code 斜杠命令
 ├── skills/rag-eval-suite/      # 通用 SKILL.md 与数学公式/分类/根因参考手册
+├── skills/dsh-plugin-release/  # 发版方法论 Skill：三道闸门 / 检查清单 / 20 条踩坑 / 契约探测器
 ├── rag_eval/                   # 纯 Python 标准库核心引擎 + Web Studio + Stdio MCP Server
-├── scripts/                    # 跨平台安装器与 MCP 启动包装脚本
+├── scripts/                    # 跨平台安装器、MCP 启动包装脚本、release.sh 一键发版
 ├── examples/sample_kb/         # 内置企业知识库示例（表格/版本/错误码/制度）
 └── tests/                      # 完整自动化单元测试与集成测试
+```
+
+---
+
+## 发版（一键发布）
+
+发版只需一条命令，脚本会把「逻辑正确 → 契约可装载 → 产物可安装」三道闸门全部跑完再动版本号：
+
+```bash
+./scripts/release.sh 0.3.1                 # 全流程：闸门 → 版本 → 打包 → 发布 → tag → GitHub Release
+./scripts/release.sh patch                 # 语义化自增（patch | minor | major）
+./scripts/release.sh 0.3.1 --dry-run       # 演练：跑闸门并打印计划，不改任何文件
+./scripts/release.sh 0.3.1 --skip-publish  # 只准备产物与提交，稍后手动 npm publish
+./scripts/release.sh 0.3.1 --otp 123456    # 直接带 6 位动态码发布
+```
+
+| 步骤 | 动作 | 拦截的问题 |
+|---|---|---|
+| 0/7 | 分支、干净工作区、npm 登录态、tag 占用、CHANGELOG 段落 | 发错分支 / 漏写变更记录 / 重复 tag |
+| 1/7 | **G1** `unittest discover` | 逻辑回归 |
+| 2/7 | **G2** `node --check` + 契约探测器 + 真实 `defineTool` 编译 | 装上了但工具注册不起来 |
+| 3/7 | 六处清单版本同步（package/plugin ×3/`__init__.py`/`mcp_config.json`） | 版本互相打架 |
+| 4/7 | **G3** `npm pack` → 解包 → `install.py --verify` → demo 冒烟，产物存入 `dist/` | 包能装但跑不起来 |
+| 5/7 | `npm publish` + 轮询 registry 生效（最长 180s） | 误判失败重复发布 |
+| 6/7 | commit `chore(release): x.y.z` + tag + push | 代码与 tag 脱节 |
+| 7/7 | `gh release create`（notes 自动取自 CHANGELOG） | Release 与代码不一致 |
+
+前置条件：工作区干净（dry-run 豁免）、`npm whoami` 有效（发布需 2FA，可传 `--otp`）、`gh` 已登录。
+产物落在 `dist/dsh-plugin-rag-eval-suite-<version>.tgz`，`dist/` 已在 `.gitignore` 中。
+
+发版方法论（三道闸门、bundle 契约、20 条真实踩坑、清单勾选）已沉淀为 `skills/dsh-plugin-release/`，
+新插件可直接复用：
+
+```bash
+cp -r scripts/release.sh skills/dsh-plugin-release /path/to/new-plugin/
+node skills/dsh-plugin-release/scripts/probe-define-tools.mjs ./dsh/index.mjs   # 契约自检
 ```
